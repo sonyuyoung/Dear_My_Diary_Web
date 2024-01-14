@@ -1,14 +1,16 @@
-IDE: IntelliJ IDEA Community
-Spring Boot 2.6.13
-JDK 11
-mysql
-Spring Data JPA
-Thymeleaf
+개발환경
+1.IDE: IntelliJ IDEA Community
+2.Spring Boot 2.6.13
+3.JDK 11
+4.mysql
+5.Spring Data JPA
+6.Thymeleaf
 게시판 주요기능
 글쓰기(/board/save)
 글목록(/board/)
 글조회(/board/{id})
 글수정(/board/update/{id})
+
 상세화면에서 수정 버튼 클릭
 서버에서 해당 게시글의 정보를 가지고 수정 화면 출력
 제목, 내용 수정 입력 받아서 서버로 요청
@@ -36,3 +38,30 @@ detail.html
 github에 올려놓은 코드를 보시고 어떤 부분이 바뀌는지 잘 살펴봐주세요.
 
 board_table(부모) - board_file_table(자식)
+
+create table board_table
+(
+id             bigint auto_increment primary key,
+created_time   datetime     null,
+updated_time   datetime     null,
+board_contents varchar(500) null,
+board_hits     int          null,
+board_pass     varchar(255) null,
+board_title    varchar(255) null,
+board_writer   varchar(20)  not null,
+file_attached  int          null
+);
+
+create table board_file_table
+(
+id                 bigint auto_increment primary key,
+created_time       datetime     null,
+updated_time       datetime     null,
+original_file_name varchar(255) null,
+stored_file_name   varchar(255) null,
+board_id           bigint       null,
+constraint FKcfxqly70ddd02xbou0jxgh4o3
+foreign key (board_id) references board_table (id) on delete cascade
+);
+
+create database myDiary;
