@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header">
+    <div class="sidebar">
+
+        <div class="logo_details">
+            <i class="bx bx-calendar-heart icon"></i>
+            <div class="logo_name">MyDiary</div>
+
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <ul class="nav-list">
+<!--            <li>-->
+<!--                <i class="bx bx-search"></i>-->
+<!--                <input type="text" placeholder="Search...">-->
+<!--                <span class="tooltip">Search</span>-->
+<!--            </li>-->
+            <li>
+                <a href="/member/save">
+                    <i class='bx bxs-user-plus'></i>
+                    <span class="link_name">회원가입</span>
+                </a>
+                <span class="tooltip">회원가입</span>
+            </li>
+            <li>
+                <a href="/member/login">
+                    <i class='bx bx-log-in'></i>
+                    <span class="link_name">로그인</span>
+                </a>
+                <span class="tooltip">로그인</span>
+            </li>
+            <li>
+                <a href="/member/">
+                    <i class="bx bx-user"></i>
+                    <span class="link_name">회원목록</span>
+                </a>
+                <span class="tooltip">회원목록</span>
+            </li>
+            <li>
+                <a href="/member/update">
+                    <i class="bx bx-user"></i>
+                    <span class="link_name">내정보수정</span>
+                </a>
+                <span class="tooltip">내정보수정</span>
+            </li>
+            <li>
+                <a href="/board/save">
+                    <i class='bx bx-calendar-heart'></i>
+                    <span class="link_name">일기쓰기</span>
+                </a>
+                <span class="tooltip">일기쓰기</span>
+            </li>
+            <li>
+                <a href="/board">
+                    <i class='bx bxs-calendar-star' ></i>
+                    <span class="link_name">일기목록</span>
+                </a>
+                <span class="tooltip">일기목록</span>
+            </li>
+
+            <li>
+                <a href="/member/">
+                    <i class='bx bx-list-check' ></i>
+                    <span class="link_name">회원목록</span>
+                </a>
+                <span class="tooltip">회원목록</span>
+            </li>
+<!--            <a href="/board/save">글작성(링크)</a>-->
+<!--            <li>-->
+<!--            <a href="/member/update">내정보수정하기</a>-->
+<!--                <i class="bx bx-user"></i>-->
+<!--                <span class="link_name">내정보수정하기</span>-->
+<!--                </a>-->
+<!--                <span class="tooltip">내정보수정하기</span>-->
+<!--            </li>-->
+            <li>
+                <a href="/member/logout">
+                    <i class='bx bx-log-out' ></i>
+                    <span class="link_name">로그아웃</span>
+                </a>
+                <span class="tooltip">로그아웃</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</html>

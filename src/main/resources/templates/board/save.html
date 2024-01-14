@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+
+    <title>save</title>
+</head>
+<body>
+<div layout:fragment="content">
+<!--<form action="/board/save" method="post">-->
+<!--  writer : <input type="text" name="boardWriter"><br>-->
+<!--  pass : <input type="text" name="boardPass"><br>-->
+<!--  title : <input type="text" name="boardTitle"><br>-->
+<!--  contents : <textarea name="boardContents" cols="30" rows="10"></textarea> <br>-->
+<!--  <input type="submit" value="글작성">-->
+<!--</form>-->
+  <form action="/board/save" method="post" enctype="multipart/form-data">
+    <div class="center-container">
+      <h3 class="dL">일기쓰기</h3>
+    <div class="form-group">
+      <label for="boardWriter">writer</label>
+      <input type="text" class="form-control" name="boardWriter" id="boardWriter">
+    </div>
+    <div class="form-group">
+      <label for="boardPass">pass</label>
+      <input type="text" class="form-control" name="boardPass" id="boardPass" >
+    </div>
+    <div class="form-group">
+      <label for="boardTitle">title</label>
+      <input type="text" class="form-control" name="boardTitle" id="boardTitle" >
+    </div>
+    <div class="form-group">
+      <label for="boardContents">contents</label>
+      <textarea class="form-control" name="boardContents" id="boardContents" rows="10"></textarea>
+    </div>
+      <label for="file">title</label>
+    <!--  <input type="file"  class="form-control" name="boardFile" id="file" > <br>-->
+      <input type="file"  class="form-control" name="boardFile" id="file" multiple> <br>
+    <input type="submit" class="btn btn-primary" value="글작성">
+    </div>
+  </form>
+
+</div>
+</body>
+</html>

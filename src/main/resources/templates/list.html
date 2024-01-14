@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>memberlist</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="center-container">
+        <h3 class="dL">회원목록</h3>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Email</th>
+                <th scope="col">password</th>
+                <th scope="col">name</th>
+                <th scope="col">상세조회</th>
+                <th scope="col">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member: ${memberlist}">
+                <td th:text="${member.id}"></td>
+                <td th:text="${member.memberEmail}"></td>
+                <td th:text="${member.memberPassword}"></td>
+                <td th:text="${member.memberName}"></td>
+                <td>
+                    <a th:href="@{|/member/${member.id}|}">조회</a>
+                </td>
+                <td>
+                    <a th:href="@{|/member/delete/${member.id}|}">삭제</a>
+                </td>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

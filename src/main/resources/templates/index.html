@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="script">
+    <script>
+        const saveReq = () =>{
+            location.href="/board/save";
+        }
+
+        const listReq = () =>{
+            location.href="/board/";
+        }
+        const pagingReq = () => {
+            location.href = "/board/paging";
+        }
+
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+session 값 확인 <p th:text="${session.loginEmail}"></p>
+<!--    <a href="/member/update">내정보수정하기</a>-->
+<!--    <button onclick="saveReq()">글작성</button>    -->
+<!--    <a href="/board/save">글작성(링크)</a>-->
+<!--    <button onclick="listReq()">글목록</button>-->
+        <button onclick="listReq()">글목록</button>
+    <button onclick="pagingReq()">페이징목록</button>
+
+
+
+</div>
+

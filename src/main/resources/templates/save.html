@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <title>save</title>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+            crossOrigin="anonymous"></script>
+</head>
+    <div layout:fragment="content">
+<body>
+<!--action 속성: form에 작성한 데이터를 어디로 보낼지 지정  -->
+<form action="/member/save" method="post">
+<!--name 속성은 서버로 전송할떄 변수이름의 역할 -->
+<!--    onkeyup="emailCheck()"-->
+    이메일 : <input type="text" name="memberEmail" id="memberEmail" onblur="emailCheck()"><br>
+ <span id="check-result"></span><br>
+  비밀번호 : <input type="text" name="memberPassword"><br>
+  이름 : <input type="text" name="memberName"><br>
+  <input type="submit" value="회원가입"><br>
+</form>
+</body>
+        <script th:inline="javascript">
+            const emailCheck = () => {
+                const email = document.getElementById("memberEmail").value;
+                const checkResult = document.getElementById("check-result");
+                console.log("입력값:",email)
+                $.ajax({
+                //     요청방식 : post , url , "email-check" , 데이터 : 이메일
+                    type : "post",
+                    url : "/member/email-check",
+                    data:{
+                        "memberEmail":email
+                    }, success : function(res){
+                        console.log("요청성공",res)
+                        if(res=="ok"){
+                            console.log("사용가능한 이메일")
+                            checkResult.innerHTML="사용가능한 이메일"
+                        }else{
+                            console.log("이미 사용중인 이메일")
+                            checkResult.innerHTML="이미 사용중인 이메일"
+                        }
+                    }, error : function(err){
+                            console.log(err)
+                        }
+                })
+            }
+        </script>
+    </div>
+</html>

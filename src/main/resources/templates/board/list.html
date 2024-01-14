@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="center-container">
+    <h3 class="dL">다이어리 목록</h3>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">title</th>
+      <th scope="col">writer</th>
+      <th scope="col">date</th>
+      <th scope="col">hits</th>
+    </tr>
+    </thead>
+<!--  <tr th:each  = "board : ${boardList}">-->
+<!--    <td th:text="${board.id}"></td>-->
+<!--    <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>-->
+<!--    <td th:text="${board.boardWriter}"></td>-->
+<!--    <td th:text="*{#temporals.format(board.boardCreatedTime,'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--    <td th:text="${board.boardHits}"></td>-->
+<!--  </tr>-->
+    <tbody>
+  <tr th:each="board: ${boardList}">
+    <td th:text="${board.id}"></td>
+    <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+    <td th:text="${board.boardWriter}"></td>
+    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    <td th:text="${board.boardHits}"></td>
+    </tbody>
+
+</table>
+
+    <!-- 첫번째 페이지로 이동 -->
+    <!-- /board/paging?page=1 -->
+<!--    <a th:href="@{/board/paging(page=1)}">First</a>-->
+<!--    &lt;!&ndash; 이전 링크 활성화 비활성화 &ndash;&gt;-->
+<!--    &lt;!&ndash; boardList.getNumber() 사용자:2페이지 getNumber()=1 &ndash;&gt;-->
+<!--&lt;!&ndash;    <a th:href="${boardList.first} ? '#':@{/board/paging(page=${boardList.number})}">prev</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a th:href="${boardList.first ? '#' : '/board/paging(page=' + boardList.number + 1 + ')'}">prev</a>&ndash;&gt;-->
+
+<!--    &lt;!&ndash; 페이지 번호 링크(현재 페이지는 숫자만)-->
+<!--            for(int page=startPage; page<=endPage; page++)&ndash;&gt;-->
+<!--      <span th:if="${startPage != null and endPage != null}" th:each="page: ${#numbers.sequence(startPage, endPage)}">-->
+<!--          &lt;!&ndash; 현재페이지는 링크 없이 숫자만 &ndash;&gt;-->
+<!--    <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>-->
+<!--      &lt;!&ndash; 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 &ndash;&gt;-->
+<!--    <span th:unless="${page == boardList.number + 1}">-->
+<!--        <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>-->
+<!--    </span>-->
+<!--</span>-->
+
+<!--    &lt;!&ndash; 다음 링크 활성화 비활성화-->
+<!--        사용자: 2페이지, getNumber: 1, 3페이지&ndash;&gt;-->
+<!--    <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">next</a>-->
+<!--    &lt;!&ndash; 마지막 페이지로 이동 &ndash;&gt;-->
+<!--    <a th:href="@{/board/paging(page=${boardList.totalPages})}">Last</a>-->
+</div>
+</div>
+</body>
+</html>

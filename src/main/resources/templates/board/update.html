@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            const boardUpdate = () => {
+                const pass = [[${boardUpdate.boardPass}]];
+                //디비에서 가져온 비밀번호
+                const inputPass = document.getElementById("boardPass").value;
+                //사용자 입력
+                if (pass == inputPass) {
+                    //같으면
+                    document.updateForm.submit();
+                    //폼태그 전송
+                } else {
+                    alert("비밀번호가 일치하지 않습니다!");
+                }
+            }
+        </script>
+    </th:block>
+    <meta charset="UTF-8">
+    <title>update</title>
+
+</head>
+
+
+<body>
+<div layout:fragment="content">
+    <form action="/board/update" method="post" name="updateForm">
+<!--        date: <input type="text" name="boardCreatedTime" th:value="${boardUpdate.boardCreatedTime}" readonly> <br>-->
+        <input type="hidden" name="id" th:value="${boardUpdate.id}">
+        writer: <input type="text" name="boardWriter" th:value="${boardUpdate.boardWriter}" readonly> <br>
+        pass: <input type="text" name="boardPass" id="boardPass"> <br>
+        title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>
+        contents: <textarea name="boardContents" cols="30" rows="10" th:text="${boardUpdate.boardContents}"></textarea> <br>
+        <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
+        <input type="button" value="글수정" onclick="boardUpdate()">
+
+<!--        <form action="/board/update" method="post" name="updateForm">-->
+<!--            <div class="center-container">-->
+<!--                <h3 class="dL">일기수정하기</h3>-->
+<!--            <div class="form-group">-->
+<!--                <label for="id"> </label>-->
+<!--                <input type="hidden" class="form-control" name="id" id="id" th:value="${boardUpdate.id}">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="writer">writer</label>-->
+<!--                <input type="text" name="boardWriter" class="form-control" id="writer"-->
+<!--                       th:value="${boardUpdate.boardWriter}"-->
+<!--                       readonly>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="boardPass">pass</label>-->
+<!--                <input type="text" class="form-control" name="boardPass" id="boardPass">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="boardTitle">title</label>-->
+<!--                <input type="text" class="form-control" name="title" id="boardTitle"-->
+<!--                       th:value="${boardUpdate.boardTitle}">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="boardContents">Contents</label>-->
+<!--                <textarea class="form-control" id="boardContents" rows="10"-->
+<!--                          th:text="${boardUpdate.boardContents}"></textarea>-->
+<!--            </div>-->
+<!--            <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">-->
+<!--            <input type="button" value="글수정" onclick="boardUpdate()">-->
+<!--            </div>-->
+<!--        </form>-->
+
+    </form>
+</div>
+</body>
+
+</html>

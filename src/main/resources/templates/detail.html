@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<title>detail</title>
+</head>
+
+<div layout:fragment="content">
+
+
+    <body>
+    <table>
+        <h2>member</h2>
+        <tr>
+            <th>id</th>
+            <th>Email</th>
+            <th>password</th>
+            <th>name</th>
+
+        </tr>
+        <tr>
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.memberEmail}"></td>
+            <td th:text="${member.memberPassword}"></td>
+            <td th:text="${member.memberName}"></td>
+        </tr>
+    </table>
+    </body>
+</div>
+</html>
