@@ -35,7 +35,13 @@
     - github에 올려놓은 코드를 보시고 어떤 부분이 바뀌는지 잘 살펴봐주세요.
 
     - board_table(부모) - board_file_table(자식)
-```
+
+8. 댓글처리하기
+   - 글 상세 페이지에서 댓글입력(ajax)
+   - 상세조회할때 기존에 작성된 댓글목록보이게
+   - 댓글 입력 기존댓글 목록에 새로 작성 댓글 추가
+   - 댓글용 테이블필요하다
+
 create table board_table
 (
 id             bigint auto_increment primary key,
