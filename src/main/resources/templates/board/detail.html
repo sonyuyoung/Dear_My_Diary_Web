@@ -53,8 +53,12 @@
 
         const listReq = () => {
             console.log("상세목록조회")
-            const page = [[${page}]]
-            location.href="/board/paging?page="+page;
+            // const page = [[${page}]]
+            // location.href="/board/paging?page="+pag
+            //
+            // e;
+            const id = [[${board.id}]];
+            location.href = "/board/";
         }
         const updateReq = () => {
             console.log("수정 요청");
@@ -115,6 +119,10 @@
             <img th:src="@{|/upload/${fileName}|}" alt=""></td>
 <!--        <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>-->
     </tr>
+
+
+
+
     </tbody>
     </table>
 
@@ -143,6 +151,8 @@
                     <th>작성자</th>
                     <th>내용</th>
                     <th>작성시간</th>
+
+
                 </tr>
                 <tr th:each="comment: ${commentList}">
                     <td th:text="${comment.id}"></td>

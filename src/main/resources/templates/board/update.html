@@ -29,17 +29,45 @@
 
 <body>
 <div layout:fragment="content">
-    <form action="/board/update" method="post" name="updateForm">
-<!--        date: <input type="text" name="boardCreatedTime" th:value="${boardUpdate.boardCreatedTime}" readonly> <br>-->
+    <form action="/board/update" method="post" name="updateForm" enctype="multipart/form-data">
+        <div class="center-container">
+            <h3 class="dL">일기수정하기</h3>
+        <!--        date: <input type="text" name="boardCreatedTime" th:value="${boardUpdate.boardCreatedTime}" readonly> <br>-->
         <input type="hidden" name="id" th:value="${boardUpdate.id}">
-        writer: <input type="text" name="boardWriter" th:value="${boardUpdate.boardWriter}" readonly> <br>
-        pass: <input type="text" name="boardPass" id="boardPass"> <br>
-        title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>
-        contents: <textarea name="boardContents" cols="30" rows="10" th:text="${boardUpdate.boardContents}"></textarea> <br>
-        <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
-        <input type="button" value="글수정" onclick="boardUpdate()">
+<!--        writer: <input type="text" name="boardWriter" th:value="${boardUpdate.boardWriter}" readonly> <br>-->
+        <div class="form-group">
+            <label for="boardWriter">writer</label>
+            <input type="text" class="form-control" name="boardWriter" id="boardWriter">
+        </div>
+<!--        pass: <input type="text" name="boardPass" id="boardPass"> <br>
+-->
+            <div class="form-group">
+                <label for="boardPass">pass</label>
+                <input type="text" class="form-control" name="boardPass" id="boardPass" >
+            </div>
+<!--        title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>-->
+            <div class="form-group">
+                <label for="boardTitle">title</label>
+                <input type="text" class="form-control" name="boardTitle" id="boardTitle" >
+            </div>
+            <div class="form-group">
+                <label for="boardContents">contents</label>
+                <textarea class="form-control" name="boardContents" id="boardContents" rows="10"></textarea>
+            </div>
 
-<!--        <form action="/board/update" method="post" name="updateForm">-->
+<!--        contents: <textarea name="boardContents" cols="30" rows="10" th:text="${boardUpdate.boardContents}"></textarea> <br>-->
+        <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
+
+        <label for="file">사진첨부</label>
+<!--          <input type="file"  class="form-control" name="boardFile" id="file" > <br>-->
+            <input type="file" class="form-control" name="boardFile" id="file" multiple>
+            <br>
+            <input type="button" value="글수정" onclick="boardUpdate()">
+
+<!--    <input type="button" value="글수정" onclick="boardUpdate()">-->
+</div>
+    </form>
+        <!--        <form action="/board/update" method="post" name="updateForm">-->
 <!--            <div class="center-container">-->
 <!--                <h3 class="dL">일기수정하기</h3>-->
 <!--            <div class="form-group">-->
@@ -72,7 +100,6 @@
 <!--            </div>-->
 <!--        </form>-->
 
-    </form>
 </div>
 </body>
 

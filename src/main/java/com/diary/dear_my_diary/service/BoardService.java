@@ -118,16 +118,82 @@ public class BoardService {
 
     }
 
-    public BoardDTO updata(BoardDTO boardDTO) {
-        //엔티티로 변환작업
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
-        boardRepository.save(boardEntity);
-        return findById(boardDTO.getId());
-        //해당 게시글의 상세조회값으 넘겨줘야하니까, 위에 findById가 있으니까 재사용
-     /* 스프링데이터 jpa는 save 메서드로 insert와 update 둘다가능
-     id값으로 대응함. ( id 값이 있으면 업데이트 )
-      */
+    public void update(BoardDTO boardDTO) throws IOException {
+        if (boardDTO.getBoardFile().isEmpty()) {
+            BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+            boardRepository.save(boardEntity);
+//        return findById(boardDTO.getId());
+        } else {
+
+            List<MultipartFile> boardFile = boardDTO.getBoardFile(); // 1.
+            String originalFilename = boardFile.getOriginalFilename(); // 2.
+            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
+            String savePath = "C:/springboot_img/" + storedFileName; // 4. C:/springboot_img/9802398403948_내사진.jpg
+//            String savePath = "/Users/사용자이름/springboot_img/" + storedFileName; // C:/springboot_img/9802398403948_내사진.jpg
+            boardFile.transferTo(new File(savePath)); // 5.
+            BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
+            Long savedId = boardRepository.save(boardEntity).getId();
+            BoardEntity board = boardRepository.findById(savedId).get();
+
+            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+            boardFileRepository.save(boardFileEntity);
+        }
+
     }
+//    public BoardDTO updata(BoardDTO boardDTO) {
+//        //엔티티로 변환작업
+//        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+//        boardRepository.save(boardEntity);
+//        return findById(boardDTO.getId());
+//        //해당 게시글의 상세조회값으 넘겨줘야하니까, 위에 findById가 있으니까 재사용
+//     /* 스프링데이터 jpa는 save 메서드로 insert와 update 둘다가능
+//     id값으로 대응함. ( id 값이 있으면 업데이트 )
+//      */
+//
+//
+//    }
+//public BoardDTO updata(BoardDTO boardDTO, List<MultipartFile> boardFiles) throws IOException {
+//    if (boardFiles != null && !boardFiles.isEmpty()) {
+//        // 파일이 업로드되었을 경우
+//        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+//        Long saveId = boardRepository.save(boardEntity).getId(); // 엔티티를 저장하고 ID를 얻어옴
+//
+//        // 파일 업로드 및 저장
+//        List<String> originalFileNames = new ArrayList<>();
+//        List<String> storedFileNames = new ArrayList<>();
+//
+//        for (MultipartFile boardFile : boardFiles) {
+//            String originalFilename = boardFile.getOriginalFilename();
+//            String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+//            String savePath = "/Users/u020/springboot_img/" + storedFileName;
+//            boardFile.transferTo(new File(savePath));
+//
+//            // 파일 엔티티 생성 및 저장
+//            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(
+//                    boardRepository.findById(saveId).get(), originalFilename, storedFileName);
+//            boardFileEntity = boardFileRepository.save(boardFileEntity);
+//
+//            originalFileNames.add(originalFilename);
+//            storedFileNames.add(storedFileName);
+//        }
+//
+//        boardDTO.setOriginalFileName(originalFileNames);
+//        boardDTO.setStoredFileName(storedFileNames);
+//    } else {
+//        // 파일이 업로드되지 않았을 경우
+//        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+//        boardRepository.save(boardEntity);
+//    }
+//
+//    // 엔티티로 변환작업
+//    BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+//    boardRepository.save(boardEntity);
+//
+//    return findById(boardDTO.getId());
+//}
+//
+
+
 
     public void delete(Long id) {
         boardRepository.deleteById(id);

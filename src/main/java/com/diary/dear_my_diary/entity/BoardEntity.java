@@ -40,6 +40,8 @@ public class BoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
 
+
+
     // DTO->Entity ( Entity class 에서)
     //디티오 객체를 엔티티 형태로 옮겨닮는 작업으로 보면됨
     public static BoardEntity toSaveEntity(BoardDTO boardDTO){
@@ -53,6 +55,7 @@ public class BoardEntity extends BaseEntity {
         return boardEntity;
 
     }
+
 
     public static BoardEntity toUpdateEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();

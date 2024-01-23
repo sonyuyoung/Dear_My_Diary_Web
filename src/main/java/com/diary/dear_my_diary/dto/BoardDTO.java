@@ -32,10 +32,12 @@ public class BoardDTO {
     //게시글작성시간
     private LocalDateTime boardUpdatedTime;
     //수정시간
+
     //파일여러개
     private List<MultipartFile> boardFile; // save.html -> Controller 파일 담는 용도
 //    private MultipartFile boardFile; // save.html -> Controller 파일 담는 용도
     //가져가야하는 파일도 여러게
+
 //    private String originalFileName; // 원본 파일 이름
     private List<String> originalFileName; // 원본 파일 이름
     private List<String> storedFileName; // 서버 저장용 파일 이름

@@ -2,20 +2,22 @@ package com.diary.dear_my_diary.controller;
 
 
 import com.diary.dear_my_diary.dto.BoardDTO;
+import com.diary.dear_my_diary.entity.BoardFileEntity;
+import com.diary.dear_my_diary.repository.BoardFileRepository;
 import com.diary.dear_my_diary.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -73,41 +75,85 @@ public class BoardController {
     }
 
     @PostMapping("/board/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
-        BoardDTO board = boardService.updata(boardDTO);
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
+        BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
-//        return "board/detail";
-         return "redirect:/board/"+boardDTO.getId();
+        return "board/detail";
+//         return "redirect:/board/"+boardDTO.getId();
         // 이렇게도 할수있는데 이렇게하면 수정후 조회수까지 같이올라가서
         //수정하고 난뒤에 수정된 상세페이지로 이동
 
     }
+
+//    @PostMapping("/board/update")
+//    public String update(@ModelAttribute BoardDTO boardDTO,
+//                         @RequestParam("boardFile") List<MultipartFile> boardFiles,
+//                         Model model) {
+//        try {
+//            BoardDTO updatedBoard = boardService.updata(boardDTO, boardFiles);
+//            model.addAttribute("board", updatedBoard);
+//            return "board/detail";
+//        } catch (IOException e) {
+//            // 파일 처리 중 예외가 발생한 경우 여기에 대한 예외 처리 로직을 추가할 수 있습니다.
+//            e.printStackTrace(); // 예외 처리는 로그로 기록하거나 적절한 방식으로 처리해야 합니다.
+//            model.addAttribute("error", "파일 처리 중 오류가 발생했습니다.");
+//            return "error-page"; // 파일 처리 중 오류가 발생한 경우 에러 페이지로 리다이렉트
+//        }
+//    }
+
+
+    //    @Transactional(readOnly = true)
+//    public BoardDTO getBoradDtl(Long boardId){
+//        List<BoardFileEntity> BoardImgList= BoardFileRepository.findByBoardIdOrderByIdAsc(boardId);
+//        List<BoardDTO> BoardImgDtoList  =new ArrayList<>();
+//        for (BoardFileEntity boaradFileEntity : boar){
+//            BoardDTO boardDTO = BoardDTO.of(BoardFileEntity);
+//            BoardImgList.add(boardImg);
+//        }
+//
+//    }
+//@PostMapping("/board/update")
+//public String update(@ModelAttribute BoardDTO boardDTO, Model model,
+//                     @RequestParam(value = "files", required = false) List<MultipartFile> files) {
+//    try {
+//        boardDTO.setBoardFile(files); // 이미지를 DTO에 설정
+//        BoardDTO updatedBoard = boardService.update(boardDTO); // 이미지를 포함하여 업데이트
+//
+//        model.addAttribute("board", updatedBoard);
+//        return "board/detail";
+//    } catch (IOException e) {
+//        // 파일 처리 중 예외가 발생한 경우 여기에 대한 예외 처리 로직을 추가할 수 있습니다.
+//        e.printStackTrace(); // 예외 처리는 로그로 기록하거나 적절한 방식으로 처리해야 합니다.
+//        model.addAttribute("error", "파일 처리 중 오류가 발생했습니다.");
+//        return "errorPage"; // 파일 처리 중 오류가 발생한 경우 에러 페이지로 리다이렉트
+//    }
+//}
     @GetMapping("/board/delete/{id}")
     public String delete(@PathVariable Long id){
         boardService.delete(id);
         return "redirect:/board/";
     }
-    @GetMapping("board/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
-//        pageable.getPageNumber();
-        Page<BoardDTO> boardList = boardService.paging(pageable);
-        int blockLimit = 3;
-//        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() + 1 / blockLimit))) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
-
-        // page 갯수 20개
-        // 현재 사용자가 3페이지
-        // 1 2 3
-        // 현재 사용자가 7페이지
-        // 7 8 9
-        // 보여지는 페이지 갯수 3개
-        // 총 페이지 갯수 8개
-
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-//        return "redirect:/board";
-        return "board/paging";
-    }
+//    @GetMapping("board/paging")
+//    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+////        pageable.getPageNumber();
+//        Page<BoardDTO> boardList = boardService.paging(pageable);
+//        int blockLimit = 3;
+////        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+//        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() + 1 / blockLimit))) - 1) * blockLimit + 1;
+//        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+//
+//        // page 갯수 20개
+//        // 현재 사용자가 3페이지
+//        // 1 2 3
+//        // 현재 사용자가 7페이지
+//        // 7 8 9
+//        // 보여지는 페이지 갯수 3개
+//        // 총 페이지 갯수 8개
+//
+//        model.addAttribute("boardList", boardList);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+////        return "redirect:/board";
+//        return "board/paging";
+//    }
     }
